@@ -1,9 +1,9 @@
-import Pop from "src/components/process/Popover";
+import Boot from "src/components/process/Buttom";
 
 function Pag() {
   return (
     <div>
-      <Pop />
+     <Boot />
     </div>
   )
 }

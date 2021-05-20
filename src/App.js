@@ -1,5 +1,5 @@
 import './App.css';
-import Process from './pages/process'
+import Process from 'src/pages/process';
 
 const App = () => {
 

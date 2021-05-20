@@ -14,32 +14,42 @@ const useStyles = makeStyles((theme) => ({
 export default function Text() {
 
   const classes = useStyles();
-  const [title, setTitle] = useState('');
-  const [details, setDetails] = useState('');
+  const [fieldTitle, setFieldtitle] = useState('');
+  const [fieldDetails, setFielddetails] = useState('');
+  const [title, setTitle] = useState();
+  const [details, setDetails] = useState();
 
-  const handleChange = e => {
-    setTitle(e.target.value);
-    setDetails(e.target.value);
+  const handleChange = (e) => {
+    setFieldtitle(e.target.value);
+    setFielddetails(e.target.value);
+  };
+
+  const Click = (event) => {
+    setTitle(event.currentTarget);
+    setDetails(event.currentTarget);
   };
 
   return (
-    <form noValidate autocomplete="off" >
+    <form noValidate autocomplete="off" type='' >
       <div className={classes.group}>
-        {tittle}
+        <div id={title} onClick={Click}>
+          Nome do Processo
+        </div>
         <TextField
-          onChange={(e) => setTitle(e.target.value)}
-          value={title} 
+          value={fieldTitle} 
           onChange={handleChange}
           id="standard-basic"
-          label="Nome do Processo"
+          label="Novo do Processo"
           color='secondary'
         >
         </TextField>
       </div>
       <div className={classes.group}>
+        <div id={details} onClick={Click}>
+          Descrição
+        </div>
         <TextField
-          onChange={(e) => setDetails(e.target.value)}
-          value={details}
+          value={fieldDetails}
           onChange={handleChange}
           id="standard-basic"
           label="Detalhes"
