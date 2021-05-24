@@ -1,7 +1,10 @@
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 import Pop from 'src/components/process/Popover';
+import Text from 'src/components/process/Text';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,43 +12,40 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
-  iconButton: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 30,
-    padding: '0 30px',
-    marginTop: 200,
-    marginLeft: 550,
-    display: 'flex',
-    alignItems: 'center',
-    width: 200,
-  },
 }));
 
-export default function Boot() {
+const Boot = () => {
+
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElBtn, setAnchorElBtn] = useState(null);
+  const [open, setOpen] =  useState(false);
+  const [id, setId] = useState('');
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const handleClose = () => {
+    setAnchorElBtn(null);
+    console.log( " anchor pos " , anchorElBtn)
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'Pop' : undefined;
+  const handleClick = (event) => {
+    setAnchorElBtn(event.currentTarget);
+    setOpen(true);
+    setId(event.currentTarget.id);
+  };
 
-  return (
-    <Button 
-      className={classes.iconButton}
-      aria-describedby={id} 
+  return ( <>
+    <IconButton 
+      id='idBtnClick'
+      className={classes.iconButton} 
       variant="contained"  
-      onClick={handleClick}
+      color="primary"
+      onClick={(e) => handleClick(e)}
     >
-      Pop
-      <Pop />
-    </Button>
-  );
+      <AddIcon />
+    </IconButton>
+    <Pop paramId={id} paramOpen={open} paramAnchorEl={anchorElBtn} paramOnClose={handleClose} paramComponent={() => {return(<Text />)}}/>
+  </>);
 }
+
+export default memo(Boot);

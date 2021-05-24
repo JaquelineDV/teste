@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Text() {
 
   const classes = useStyles();
+  
   const [fieldTitle, setFieldtitle] = useState('');
   const [fieldDetails, setFielddetails] = useState('');
   const [title, setTitle] = useState();
@@ -39,7 +40,6 @@ export default function Text() {
           value={fieldTitle} 
           onChange={handleChange}
           id="standard-basic"
-          label="Novo do Processo"
           color='secondary'
         >
         </TextField>
@@ -52,7 +52,6 @@ export default function Text() {
           value={fieldDetails}
           onChange={handleChange}
           id="standard-basic"
-          label="Detalhes"
           color='secondary'
         >
         </TextField>
