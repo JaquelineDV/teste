@@ -25,7 +25,6 @@ const Boot = () => {
 
   const handleClose = () => {
     setAnchorElBtn(null);
-    console.log( " anchor pos " , anchorElBtn)
   };
 
   const handleClick = (event) => {

@@ -1,61 +1,66 @@
 import { useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
+import Grid from '@material-ui/core/Grid';
 
 export default function Text() {
-
-  const classes = useStyles();
   
-  const [fieldTitle, setFieldtitle] = useState('');
-  const [fieldDetails, setFielddetails] = useState('');
+  const [fieldTitle, setFieldTitle] = useState(null);
+  const [fieldDetails, setFieldDetails] = useState(null);
   const [title, setTitle] = useState();
   const [details, setDetails] = useState();
 
   const handleChange = (e) => {
-    setFieldtitle(e.target.value);
-    setFielddetails(e.target.value);
+    setFieldTitle(e.target.value.fieldTitle);
+    setFieldDetails(e.target.value.fieldDetails);
   };
 
-  const Click = (event) => {
-    setTitle(event.currentTarget);
-    setDetails(event.currentTarget);
+  const DblClick = (event) => {
+    setTitle(event.currentTarget.id);
+    setDetails(event.currentTarget.id);
+
+    console.log('clicou');
   };
+
+ 
 
   return (
-    <form noValidate autocomplete="off" type='' >
-      <div className={classes.group}>
-        <div id={title} onClick={Click}>
-          Nome do Processo
-        </div>
-        <TextField
-          value={fieldTitle} 
-          onChange={handleChange}
-          id="standard-basic"
-          color='secondary'
-        >
-        </TextField>
-      </div>
-      <div className={classes.group}>
-        <div id={details} onClick={Click}>
-          Descrição
-        </div>
-        <TextField
-          value={fieldDetails}
-          onChange={handleChange}
-          id="standard-basic"
-          color='secondary'
-        >
-        </TextField>
-      </div>
-    </form>
+    <Grid container spacing={3} direction="column" justify="flex-end" alignItems="stretch">
+         
+      <Grid item>
+
+        <Grid container>
+          {true ?
+            <div item id={title} onDoubleClick={(e) => DblClick(e)}>
+            Nome do Processo
+            </div>
+            :
+            <TextField
+            value={fieldTitle} 
+            onChange={handleChange}
+            id="standard-basic"
+            color='secondary'
+          >
+          </TextField>
+          }
+        </Grid>
+
+      </Grid>
+      <Grid container >
+        { true ?
+          <div id={details} onDoubleClick={(e) => DblClick(e)}>
+            Descrição
+          </div>
+            :
+          <TextField
+            value={fieldDetails}
+            onChange={handleChange}
+            id="standard-basic"
+            color='secondary'
+          >
+          </TextField>
+        }
+      </Grid>
+    </Grid>
   );
 }
+//{ param ? component1 : conponent2 }

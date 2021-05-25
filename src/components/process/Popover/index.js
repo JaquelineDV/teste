@@ -1,9 +1,8 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
-import Popover from '@material-ui/core/Popover';
-import Text from 'src/components/process/Text';
+import {Popover, Grid} from '@material-ui/core';
+
 
 const useStyles = makeStyles(() =>({
   root: {
@@ -16,14 +15,15 @@ const useStyles = makeStyles(() =>({
 
 
 const Pop = ({paramComponent ,paramId ,paramOpen, paramAnchorEl, paramOnClose }) => {
-  
 
-console.log( ' - ' , paramId ,paramOpen, paramAnchorEl)
+  const classes = useStyles();
+
   return (
-    <div>
+    <>
       <Popover
         id={paramId}  
         open={paramOpen && paramAnchorEl ? true: false}
+        className={classes.Pop}
         anchorEl={paramAnchorEl}
         onClose={paramOnClose}
         anchorOrigin={{
@@ -35,9 +35,13 @@ console.log( ' - ' , paramId ,paramOpen, paramAnchorEl)
           horizontal: 'center',
         }}
       >
-        {paramComponent()}
+        <Grid container style={{padding : '20px'}}>
+          <Grid item>
+            {paramComponent()}
+          </Grid>
+        </Grid>
       </Popover>
-    </div>
+    </>
   );
 }
 Pop.propTypes = {
@@ -48,4 +52,4 @@ Pop.propTypes = {
   paramOnClose : PropTypes.func,
 }
 
-export default Pop;
+export default memo(Pop);
