@@ -6,39 +6,38 @@ export default function Text() {
   
   const [fieldTitle, setFieldTitle] = useState(true);
   const [fieldDetails, setFieldDetails] = useState(true);
-  const [title, setTitle] = useState(true);
-  const [details, setDetails] = useState(true);
-  
+  const title= useState('');
+  const details = useState('');
+
   const wrapperRef = useRef(null);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false); 
+  
+  //const DblClick = (event) => {
+    //setTitle(event.currentTarget.id);
+   // setDetails(event.currentTarget.id);
 
-  const DblClick = (event) => {
-    setTitle(event.currentTarget.id);
-    setDetails(event.currentTarget.id);
-
-    console.log('clicou');
-  };
-
-  const handleHideDropdown = event => {
-    if (event.key === '') {
-      setIsDropdownVisible(false);
-    }
-  };
+   // console.log('clicou')
+  //};
 
   useEffect(() => {
 
     const handleClickOutside = event => {
-      
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setIsDropdownVisible(false)
+        setFieldTitle();
       }
     }
+   // const handleHideDropdown = (event) => {
+     // if (event.key === 'Escape') {
+      //  setIsDropdownVisible(false);
+     // }//
+    //};//
+
+   // document.addEventListener('keydown', handleHideDropdown, true);
 
     document.addEventListener('click', handleClickOutside, true);
     return () => {
-        document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
-  }, [ setIsDropdownVisible]);
+  }); 
 
   return (
     <Grid container spacing={3} direction="column" justify="flex-end" alignItems="stretch">
@@ -46,14 +45,20 @@ export default function Text() {
       <Grid item>
 
         <Grid container>
-          {setFieldTitle ?
-            <div item id={title} onDoubleClick={(e) => DblClick(e)}>
+          {fieldTitle ?
+            <div id={title} onDoubleClick={() => setFieldTitle(false)}>
               Nome do Processo
             </div>
             :
             <TextField
               ref={wrapperRef}
-              value={fieldTitle} 
+              value={title} 
+              onKeDyown={(event) => {
+                  if (event.key === 'Enter' ){
+                    setFieldTitle(true)
+                  }
+                }
+              }
               onChange={(e) => (e.target.value.fieldTitle)}
               id="standard-basic"
               color='secondary'
@@ -64,13 +69,19 @@ export default function Text() {
 
       </Grid>
       <Grid container >
-        { setFieldDetails ?
-          <div id={details} onDoubleClick={(e) => DblClick(e)}>
+        { fieldDetails ?
+          <div id={details} onDoubleClick={() => setFieldDetails(false)}>
             Descrição
           </div>
-            :
+          :
           <TextField
-            value={fieldDetails}
+            value={details}
+            onKeDyown={(event) => {
+                if (event.key === 'Enter' ){
+                  setFieldDetails(true)
+                }
+              }
+            }
             onChange={(e) => (e.target.value.fieldDetails)}
             id="standard-basic"
             color='secondary'
